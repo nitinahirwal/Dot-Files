@@ -1,0 +1,176 @@
+# ───────────────────────────
+# AeroSpace config (Omarchy-style, no conflicts)
+# ~/.config/aerospace/aerospace.toml
+# ───────────────────────────
+
+after-startup-command = []
+start-at-login = true
+
+# Normalizations
+enable-normalization-flatten-containers = true
+enable-normalization-opposite-orientation-for-nested-containers = true
+
+# Layout
+accordion-padding = 30
+default-root-container-layout = 'tiles'
+default-root-container-orientation = 'auto'
+
+# Mouse follows focus
+on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+
+# Don’t unhide hidden macOS apps automatically
+automatically-unhide-macos-hidden-apps = false
+
+[key-mapping]
+preset = 'qwerty'
+
+[gaps]
+inner.horizontal = 6
+inner.vertical   = 6
+outer.left       = 8
+outer.right      = 8
+outer.top        = 8
+outer.bottom     = 8
+
+# ───────────────────────────
+# Main binding mode
+# ───────────────────────────
+[mode.main.binding]
+
+# Layout toggles
+cmd-backslash = 'layout tiles horizontal vertical'   # moved from cmd-slash to avoid conflict
+cmd-comma     = 'layout accordion horizontal vertical'
+
+# Focus (Arrow keys)
+cmd-left  = 'focus left'
+cmd-down  = 'focus down'
+cmd-up    = 'focus up'
+cmd-right = 'focus right'
+
+# Move windows (Shift + Arrows)
+cmd-shift-left  = 'move left'
+cmd-shift-down  = 'move down'
+cmd-shift-up    = 'move up'
+cmd-shift-right = 'move right'
+
+# Resize
+cmd-minus = 'resize smart -50'
+cmd-equal = 'resize smart +50'
+
+# Workspaces (numbers only to avoid launcher clashes)
+cmd-1 = 'workspace 1'
+cmd-2 = 'workspace 2'
+cmd-3 = 'workspace 3'
+cmd-4 = 'workspace 4'
+cmd-5 = 'workspace 5'
+cmd-6 = 'workspace 6'
+cmd-7 = 'workspace 7'
+cmd-8 = 'workspace 8'
+cmd-9 = 'workspace 9'
+
+# Move node to workspace (Shift + number)
+cmd-shift-1 = 'move-node-to-workspace 1'
+cmd-shift-2 = 'move-node-to-workspace 2'
+cmd-shift-3 = 'move-node-to-workspace 3'
+cmd-shift-4 = 'move-node-to-workspace 4'
+cmd-shift-5 = 'move-node-to-workspace 5'
+cmd-shift-6 = 'move-node-to-workspace 6'
+cmd-shift-7 = 'move-node-to-workspace 7'
+cmd-shift-8 = 'move-node-to-workspace 8'
+cmd-shift-9 = 'move-node-to-workspace 9'
+
+# Workspace back/forth + move workspace to next monitor
+cmd-tab       = 'workspace-back-and-forth'
+cmd-shift-tab = 'move-workspace-to-monitor --wrap-around next'
+
+# Switch to service mode
+cmd-shift-semicolon = 'mode service'
+
+# ───────────────────────────
+# Omarchy-style app launchers (macOS with iTerm)
+# ───────────────────────────
+
+# iTerm (Super + Return)
+cmd-enter = '''exec-and-forget osascript -e '
+tell application "iTerm"
+  create window with default profile
+  activate
+end tell' '''
+
+# Finder (Super + F)
+cmd-f = '''exec-and-forget osascript -e '
+tell application "Finder"
+  make new Finder window
+  activate
+end tell' '''
+
+# Browser (Chrome) (Super + B / Shift+B for incognito)
+cmd-b        = 'exec-and-forget open -a "Google Chrome"'
+cmd-shift-b  = 'exec-and-forget open -a "Google Chrome" --args --incognito'
+
+# Music (Spotify) (Super + M)
+cmd-m = 'exec-and-forget open -a "Spotify"'
+
+# Editor (VS Code) (Super + N)
+cmd-n = 'exec-and-forget open -a "Visual Studio Code"'
+
+# Activity (btop in iTerm) (Super + T)
+cmd-t = '''exec-and-forget osascript -e '
+tell application "iTerm"
+  tell current window
+    create tab with default profile
+    tell current session to write text "btop"
+  end tell
+  activate
+end tell' '''
+
+# Docker (lazydocker in iTerm) (Super + D)
+cmd-d = '''exec-and-forget osascript -e '
+tell application "iTerm"
+  tell current window
+    create tab with default profile
+    tell current session to write text "lazydocker"
+  end tell
+  activate
+end tell' '''
+
+# Signal (Super + G)
+cmd-g = 'exec-and-forget open -a "Signal"'
+
+# Obsidian (Super + O)
+cmd-o = 'exec-and-forget open -a "Obsidian"'
+
+# 1Password (Super + /)
+cmd-slash = 'exec-and-forget open -a "1Password"'
+
+# Web apps (forced to Chrome; change the app name if you use Arc/Safari/Brave)
+cmd-a        = 'exec-and-forget open -a "Google Chrome" "https://chatgpt.com"'
+cmd-shift-a  = 'exec-and-forget open -a "Google Chrome" "https://grok.com"'
+cmd-c        = 'exec-and-forget open -a "Google Chrome" "https://app.hey.com/calendar/weeks/"'
+cmd-e        = 'exec-and-forget open -a "Google Chrome" "https://app.hey.com"'
+cmd-y        = 'exec-and-forget open -a "Google Chrome" "https://youtube.com"'
+cmd-shift-g  = 'exec-and-forget open -a "Google Chrome" "https://web.whatsapp.com/"'
+cmd-alt-g    = 'exec-and-forget open -a "Google Chrome" "https://messages.google.com/web/conversations"'
+cmd-x        = 'exec-and-forget open -a "Google Chrome" "https://x.com/"'
+cmd-shift-x  = 'exec-and-forget open -a "Google Chrome" "https://x.com/compose/post"'
+
+# ───────────────────────────
+# Service binding mode
+# ───────────────────────────
+[mode.service.binding]
+esc        = ['reload-config', 'mode main']
+r          = ['flatten-workspace-tree', 'mode main']
+f          = ['layout floating tiling', 'mode main']
+backspace  = ['close-all-windows-but-current', 'mode main']
+
+# Join containers (Shift + Arrows)
+cmd-shift-left  = ['join-with left', 'mode main']
+cmd-shift-down  = ['join-with down', 'mode main']
+cmd-shift-up    = ['join-with up', 'mode main']
+cmd-shift-right = ['join-with right', 'mode main']
+
+# Volume
+down       = 'volume down'
+up         = 'volume up'
+shift-down = ['volume set 0', 'mode main']
+
